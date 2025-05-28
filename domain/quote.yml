@@ -1,0 +1,44 @@
+version: "3.1"
+
+actions:
+  - action_fetch_quote
+
+slots:
+  quote_id:
+    type: text
+    mappings:
+      - type: from_llm
+  quote_relationship_id:
+    type: text
+    mappings:
+      - type: from_llm
+  quote_opportunity_id:
+    type: text
+    mappings:
+      - type: from_llm
+  quote_details:
+    type: text
+    mappings:
+      - type: from_llm
+  quote_vehicle:
+   type: text
+   mappings:
+    - type: from_llm
+
+
+
+responses:
+  utter_ask_quote_id:
+    - text: "What is the ID of the quote you're looking for?"
+  
+  utter_ask_quote_relationship_id:
+    - text: "What is the ID of the relationship the quote belongs to?"
+  
+  utter_ask_quote_opportunity_id:
+    - text: "What is the ID of the opportunity the quote belongs to?"
+
+  utter_quote_found:
+    - text: "Quote {quote_id} has been found. It is a quote for a {quote_vehicle}."
+  
+  utter_quote_not_found:
+    - text: "Sorry, I could not find a quote matching those details."

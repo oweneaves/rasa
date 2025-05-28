@@ -1,0 +1,40 @@
+flows:
+  get_relationship:
+    description: 'Fetch information about a relationship given a relationship_id'
+    steps:
+      - collect: relationship_id
+      - action: action_fetch_relationship
+        next:
+          - if: slots.relationship_name is null
+            then:
+              - action: utter_relationship_not_found
+                next: END
+          - else: relationship_found
+
+      - action: utter_relationship_found
+        next: reset_slots
+        id: relationship_found
+
+      - action: action_reset_slots
+        id: reset_slots
+  
+  get_quote:
+    description: 'Fetch information about a quote given a relationship_id, opportunity_id and quote_id'
+    steps:
+      - collect: quote_relationship_id
+      - collect: quote_opportunity_id
+      - collect: quote_id
+      - action: action_fetch_quote
+        next:
+        - if: slots.quote_vehicle is null
+          then:
+            - action: utter_quote_not_found
+              next: END
+        - else: quote_found
+
+      - action: utter_quote_found
+        id: quote_found
+        next: reset_slots
+
+      - action: action_reset_slots
+        id: reset_slots

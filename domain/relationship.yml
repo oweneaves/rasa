@@ -1,0 +1,47 @@
+version: "3.1"
+
+actions:
+  - action_fetch_relationship
+  - action_reset_slots
+
+slots:
+  relationship_id:
+    type: text
+    mappings:
+      - type: from_llm
+  relationship_name:
+    type: text
+    mappings:
+      - type: from_llm
+  relationship_account_manager:
+    type: text
+    mappings:
+      - type: from_llm
+  relationship_last_update_date:
+    type: text
+    mappings:
+      - type: from_llm
+
+responses:
+  utter_free_chitchat_response:
+    - text: "placeholder"
+      metadata:
+        rephrase: True
+        rephrase_prompt: |
+          The following is a conversation with an AI assistant built with Rasa.
+          The assistant is helpful, creative, clever, and very friendly.
+          The user is making small talk, and the assistant should respond, keeping things light.
+          Context / previous conversation with the user:
+          {{history}}
+          {{current_input}}
+          Suggested AI Response:
+
+  utter_ask_relationship_id:
+    - text: "What is the ID of the relationship you're looking for?"
+
+  utter_relationship_found:
+    - text: "Relationship {relationship_id} has been found with the name {relationship_name}.
+            The account manager is {relationship_account_manager} and it was last updated on {relationship_last_update_date}"
+
+  utter_relationship_not_found:
+    - text: "Sorry, I could not find a relationship with the ID {relationship_id}."
