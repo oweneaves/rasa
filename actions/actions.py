@@ -26,6 +26,29 @@ class fetch_relationship(Action):
                 SlotSet("relationship_account_manager", json['account_manager_name']),
                 SlotSet("relationship_last_update_date", json['last_update_date'])]
 
+class fetch_opportunity(Action):
+    def name(self) -> Text:
+        return "action_fetch_opportunity"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        response = requests.get(f"https://devapex22.quotevineapp.com/qvine/quotevine/api/v2/opportunities/{tracker.get_slot('opportunity_id')}/",
+                                headers={'api-key': '3D31C45E81885027632AE1BDCF325D81DF9B2867'})
+        
+        json = response.json()
+
+        return [SlotSet("opportunity_relationship_id", json['relationship_id']),
+                SlotSet("opportunity_account_manager", json['account_manager']),
+                SlotSet("opportunity_status", json['opportunity_status']),
+                SlotSet("opportunity_type", json['opportunity_type'])
+                ]
+
+
 class fetch_quote(Action):
     def name(self) -> Text:
         return "action_fetch_quote"

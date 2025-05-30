@@ -18,6 +18,26 @@ flows:
       - action: action_reset_slots
         id: reset_slots
   
+  get_opportunity:
+    description: 'Fetch information about an opportunity given an opportunity_id'
+    steps:
+      - collect: opportunity_id
+      - action: action_fetch_opportunity
+        next:
+          - if: slots.opportunity_relationship_id is null
+            then:
+              - action: utter_opportunity_not_found
+                next: END
+          - else:
+              opportunity_found
+      
+      - action: utter_opportunity_found 
+        next: reset_slots
+        id: opportunity_found
+
+      - action: action_reset_slots
+        id: reset_slots
+
   get_quote:
     description: 'Fetch information about a quote given a relationship_id, opportunity_id and quote_id'
     steps:
